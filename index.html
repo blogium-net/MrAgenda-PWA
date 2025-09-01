@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-M" />
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#111827" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MrAgenda" />
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3clinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:rgb(30, 64, 175);stop-opacity:1' /%3e%3cstop offset='100%25' style='stop-color:rgb(107, 33, 168);stop-opacity:1' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='64' height='64' rx='12' fill='url(%23grad1)'/%3e%3cpath d='M14 46V18H22L32 34L42 18H50V46H44V26L34 42H30L20 26V46H14Z' fill='white'/%3e%3c/svg%3e" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MrAgenda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      [contenteditable][data-placeholder]:empty::before {
+        content: attr(data-placeholder);
+        color: #a0aec0; /* text-gray-400 */
+        pointer-events: none;
+        display: block; /* For proper cursor behavior */
+      }
+      .dark [contenteditable][data-placeholder]:empty::before {
+        color: #718096; /* dark:text-gray-500 */
+      }
+      ul.checklist {
+        list-style: none;
+        padding-left: 0;
+      }
+      ul.checklist > li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      ul.checklist > li::before {
+        content: '☐';
+        font-size: 1.2em;
+        line-height: 1;
+        cursor: pointer;
+      }
+      ul.checklist > li.checked {
+        color: #a0aec0; /* text-gray-400 */
+        text-decoration: line-through;
+      }
+      .dark ul.checklist > li.checked {
+        color: #718096; /* dark:text-gray-500 */
+      }
+      ul.checklist > li.checked::before {
+        content: '☑';
+      }
+      .note-content-area pre {
+        background-color: #edf2f7; /* bg-gray-200 */
+        padding: 0.75rem; /* p-3 */
+        border-radius: 0.375rem; /* rounded-md */
+        overflow-x: auto;
+        font-family: monospace;
+        font-size: 0.875rem; /* text-sm */
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+      .dark .note-content-area pre {
+        background-color: #2d3748; /* dark:bg-gray-800 */
+        color: #e2e8f0; /* dark:text-gray-200 */
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .blinking-cursor {
+        display: inline-block;
+        width: 0.5em;
+        height: 1.2em;
+        background-color: currentColor;
+        vertical-align: text-bottom;
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes soft-blink {
+        50% { opacity: 0.5; }
+      }
+      .animate-soft-blink {
+        animation: soft-blink 2s infinite step-end;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.16.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-100 dark:bg-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
